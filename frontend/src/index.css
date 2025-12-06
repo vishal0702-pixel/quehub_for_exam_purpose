@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@keyframes borderGradient {
+  0% { border-color: rgb(253, 90, 171); } /* pink-500 light */
+  50% { border-color: rgb(99, 32, 255); } /* violet-500 light */
+  100% { border-color: rgb(255, 255, 255); } /* back to pink */
+}
+   
+
+@keyframes gradientBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.signup , .login{
+  background: linear-gradient(-45deg, #3b82f6, #8b5cf6, #ff4fa7);
+  background-size: 400% 400%;
+  animation: gradientBackground 10s ease infinite;
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

@@ -24,7 +24,7 @@ export default function Landingpage() {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [logoutUser]);
+  }, []);
 
   const handlelogout = () => {
     dispatch(logoutUser());
@@ -53,7 +53,7 @@ export default function Landingpage() {
           </nav>
 
           <div className="relative flex items-center gap-4" ref={dropdownRef}>
-            {!isAuthenticated ? (
+            {!isAuthenticated || !user ? (
               <>
                 <a
                   href="/register"
@@ -74,7 +74,7 @@ export default function Landingpage() {
                   onClick={toggleDropdown}
                   className="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 transition-colors text-white font-medium flex items-center gap-1"
                 >
-                  {user.firstname} ▾
+                  {user?.firstname || "User"} ▾
                 </button>
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-40 bg-gray-800 text-white rounded-lg shadow-lg border border-gray-700">
@@ -103,7 +103,6 @@ export default function Landingpage() {
             Discover notes, PYQs, and resources in one hub.
           </p>
           <div className="mt-10 flex flex-col items-center gap-6">
-            {/* ✅ Redirect to Year Selection Page */}
             <button
               onClick={() => navigate("/year")}
               className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-500 to-pink-500 hover:opacity-90 transition font-semibold shadow-md"
@@ -111,7 +110,6 @@ export default function Landingpage() {
               Get Started
             </button>
 
-            {/* 🌟 AI Study Buddy Button */}
             <button
               onClick={() => navigate("/ai/chat")}
               className="relative group px-10 py-4 rounded-full font-bold text-lg text-white 
@@ -123,11 +121,8 @@ export default function Landingpage() {
                 <Sparkles className="w-5 h-5 text-yellow-300 animate-pulse" />
                 Meet <span className="text-yellow-300">Neo</span> – Your AI Study Buddy 🚀
               </span>
-
-              {/* Sparkle animation layer */}
               <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.3),transparent_70%)] animate-pulse"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent animate-[shine_2s_linear_infinite]"></div>
-
               <style>
                 {`
                 @keyframes shine {

@@ -1,12 +1,13 @@
 // backend/index.js
 import dotenv from "dotenv";
-dotenv.config();
-
+import path from "path";
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
 import { fileURLToPath } from "url";
+
+// Load root .env
+dotenv.config({ path: path.resolve("../.env") });
 
 // Database & Redis
 import main from "./config/db.js";
@@ -27,7 +28,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 
-// CORS
+// CORS setup
 const allowedOrigins = [
   "http://localhost:5173",
   "https://quehub-frontend.vercel.app",
@@ -46,6 +47,7 @@ app.use(cors({
   credentials: true,
 }));
 
+// Body parsing & cookies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
@@ -71,8 +73,8 @@ app.get(/^(?!\/api).*/, (req, res) => {
 const initializeConnection = async () => {
   try {
     await Promise.all([
-      main(),           // MongoDB
-      redisclient.connect() // Redis
+      main(),                // MongoDB connection
+      redisclient.connect()  // Redis connection
     ]);
 
     console.log("✅ Database and Redis connected");

@@ -25,7 +25,8 @@ const app = express();
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://quehub-frontend.vercel.app"
+  "https://quehub-frontend.vercel.app",
+  "https://quehub-for-exam-purpose-1.onrender.com"
 ];
 
 app.use(cors({

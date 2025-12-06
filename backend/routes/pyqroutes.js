@@ -1,9 +1,9 @@
-const  express =  require ( "express");
-const{addpyq,getpyq} = require("../controllers/subjectpyq")
-const  pyqroutes = express.Router();
+import express from "express";
+import { addpyq, getpyq } from "../controllers/subjectpyq.js";
 
- pyqroutes.post( "/addpyq" , addpyq);
+const pyqroutes = express.Router();
 
- pyqroutes.get("/:subjectname/getpyq" , getpyq);
+pyqroutes.post("/addpyq", addpyq);
+pyqroutes.get("/:subjectname/getpyq", getpyq);
 
- module.exports = pyqroutes ;
+export default pyqroutes;

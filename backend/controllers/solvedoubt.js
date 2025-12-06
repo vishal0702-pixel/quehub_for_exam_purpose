@@ -1,22 +1,21 @@
-const { GoogleGenAI } = require("@google/genai");
+import { GoogleGenAI } from "@google/genai";
 
-// Use string key authentication
 const API_KEY = "AIzaSyADYNt1TLRJ6ZXDM17WzHGfqmIpNm2X72U";
 
-// In-memory chat history (optional, per session you can replace with DB or Redis)
+// In-memory chat history (optional)
 let chatHistory = [];
 
 const solvedoubt = async (req, res) => {
-  const { messages } = req.body; // array of previous messages + new one
+  const { messages } = req.body;
   if (!messages || !messages.length) {
     return res.status(400).json({ error: "Messages are required" });
   }
 
   try {
     const ai = new GoogleGenAI({ apiKey: API_KEY });
-
-    // Build conversation string for LLM with history
-    const conversation = messages.map(msg => `${msg.role === "user" ? "User" : "AI"}: ${msg.text}`).join("\n");
+    const conversation = messages
+      .map(msg => `${msg.role === "user" ? "User" : "AI"}: ${msg.text}`)
+      .join("\n");
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
@@ -33,8 +32,6 @@ const solvedoubt = async (req, res) => {
     });
 
     const aiText = response.text || "Sorry, I could not generate a response.";
-
-    // Push AI response to chat history
     chatHistory.push({ role: "model", text: aiText });
 
     res.json({ message: aiText });
@@ -44,4 +41,5 @@ const solvedoubt = async (req, res) => {
   }
 };
 
-module.exports = solvedoubt;
+// ✅ Export as default for ES modules
+export default solvedoubt;

@@ -1,37 +1,40 @@
-const PYQ  = require("../models/pyq");
+import PYQ from "../models/pyq.js";
+import Subject from "../models/subject.js";
 
-const Subject = require("../models/subject");
+export const addpyq = async (req, res) => {
+  try {
+    const { subject, files } = req.body;
 
-const addpyq =  async(req ,res)=>{
-
-    try {
-const {subject , files} =  req.body;
-
-const  newpyqfile = await PYQ.create({subject,files});
-
-res.send("file added succesfully")
-}
-catch(err){
-    res.send("not added")
-}}
-
-const getpyq =  async(req, res)=>{
-
-    try{
-         
-        const{subjectname} =  req.params;
-
-        const findsubject= await Subject.findOne({subjectname}); 
-
-        const findpyqfile =  await PYQ.find({subject : findsubject._id}).populate("subject" , "subjectname");
-
-        res.json(findpyqfile)
+    if (!subject || !files || !files.length) {
+      return res.status(400).send("Subject and files are required");
     }
-     catch (err) {
-    console.log("Error in getpyq:", err);
-    res.status(500).send("can't fetch");
+
+    await PYQ.create({ subject, files });
+
+    res.send("File added successfully");
+  } catch (err) {
+    console.error("Error in addpyq:", err);
+    res.status(500).send("Not added");
   }
-}
+};
 
+export const getpyq = async (req, res) => {
+  try {
+    const { subjectname } = req.params;
 
-module.exports = {addpyq ,  getpyq};
+    const findsubject = await Subject.findOne({ subjectname });
+    if (!findsubject) {
+      return res.status(404).send("Subject not found");
+    }
+
+    const findpyqfile = await PYQ.find({ subject: findsubject._id }).populate(
+      "subject",
+      "subjectname"
+    );
+
+    res.json(findpyqfile);
+  } catch (err) {
+    console.error("Error in getpyq:", err);
+    res.status(500).send("Can't fetch");
+  }
+};

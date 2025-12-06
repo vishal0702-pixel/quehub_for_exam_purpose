@@ -1,8 +1,10 @@
-const mongoose = require ('mongoose');
-require('dotenv').config();
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
-async function main ( ){
-   await mongoose.connect("mongodb+srv://Vishal:07022005vishal@database.zzugmbr.mongodb.net/quehub");
+dotenv.config();
+
+async function main() {
+  await mongoose.connect("mongodb+srv://Vishal:07022005vishal@database.zzugmbr.mongodb.net/quehub");
 }
 
-module.exports = main;
+export default main;

@@ -1,11 +1,9 @@
-const express =  require("express");
+import express from "express";
+import { addchapters, getchapters } from "../controllers/chaptername.js";
 
-const { addchapters , getchapters } =  require("../controllers/chaptername")
+const chapterroutes = express.Router();
 
-const chapterroutes =   express.Router();
+chapterroutes.post("/addchapters", addchapters);
+chapterroutes.get("/:subjectname/getchapters", getchapters);
 
-chapterroutes.post("/addchapters" , addchapters);
-
-chapterroutes.get("/:subjectname/getchapters" , getchapters);
-
-module.exports = chapterroutes ;
+export default chapterroutes;

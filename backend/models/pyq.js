@@ -1,28 +1,25 @@
-const mongoose =  require ("mongoose");
+import mongoose from "mongoose";
 
-const {Schema} = mongoose ;
+const { Schema } = mongoose;
 
-const pyqSchema = new Schema ( {
-
-    subject : {
-        type: Schema.Types.ObjectId ,
-        ref : "Subject"
+const pyqSchema = new Schema(
+  {
+    subject: {
+      type: Schema.Types.ObjectId,
+      ref: "Subject",
     },
-
-
-      files: [
+    files: [
       {
         title: { type: String },
-        link: { type: String, required: true } // Google Drive / Cloudinary / Image URL
-      }
-    ]
-    
+        link: { type: String, required: true }, // Google Drive / Cloudinary / Image URL
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
+const PYQ = mongoose.model("PYQ", pyqSchema);
 
- } , {
-    timestamps: true
- })
-
- const PYQ = mongoose.model( "PYQ" , pyqSchema) ;
-
- module.exports =  PYQ ;
+export default PYQ;

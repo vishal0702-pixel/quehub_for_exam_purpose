@@ -1,10 +1,9 @@
-const  express =  require ("express");
-const {addtopics , gettopics} = require("../controllers/chaptertopics")
+import express from "express";
+import { addtopics, gettopics } from "../controllers/chaptertopics.js";
 
-const  topicsroute =  express.Router();
+const topicsroute = express.Router();
 
-topicsroute.post ( "/addtopics" , addtopics);
+topicsroute.post("/addtopics", addtopics);
+topicsroute.get("/:chaptername/gettopics", gettopics);
 
-topicsroute.get("/:chaptername/gettopics" , gettopics);
-
-module.exports = topicsroute ;
+export default topicsroute;

@@ -1,9 +1,9 @@
-const express =  require ( "express") ;
-const  {yearAdding, yearchoice } = require("../controllers/academicyear")
+import express from "express";
+import { yearAdding, yearchoice } from "../controllers/academicyear.js";
 
 const yearrouter = express.Router();
 
-yearrouter.post("/addyear" , yearAdding)
-yearrouter.get("/" , yearchoice );
+yearrouter.post("/addyear", yearAdding);
+yearrouter.get("/", yearchoice);
 
-module.exports= yearrouter;
+export default yearrouter;

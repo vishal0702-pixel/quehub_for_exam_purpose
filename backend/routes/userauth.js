@@ -1,35 +1,34 @@
-const express = require('express');
-const userAuthrouter= express.Router();
-const usermiddleware = require("../middleware/usermiddleware")
+import express from "express";
+import usermiddleware from "../middleware/usermiddleware.js";
+import { register, login, logout } from "../controllers/usereAuthentic.js";
+import isEmail from "validator/lib/isEmail.js";
 
-const {register , login , logout}= require("../controllers/usereAuthentic");
-const { default: isEmail } = require('validator/lib/isEmail');
+const userAuthrouter = express.Router();
 
+// Register
+userAuthrouter.post("/register", register);
 
-    //register 
-    userAuthrouter.post( "/register" ,register)
-    //login
-    userAuthrouter.post("/login" , login) 
-    //logout
-    userAuthrouter.post("/logout", usermiddleware ,logout)
+// Login
+userAuthrouter.post("/login", login);
 
-    //usreauthentication 
+// Logout
+userAuthrouter.post("/logout", usermiddleware, logout);
 
-    userAuthrouter.get("/check" , usermiddleware , (req,res)=>{
+// Check user authentication
+userAuthrouter.get("/check", usermiddleware, (req, res) => {
+  const reply = {
+    firstname: req.result.firstname,
+    emailID: req.result.emailID,
+    id: req.result._id,
+  };
 
-        const  reply = { 
-            firstname : req.result.firstname ,
-            emailID :req.result.emailID,
-             id : req.result._id        }
+  res.json({
+    user: reply,
+    message: "Checked user successfully",
+  });
+});
 
-             res.json({
-                user:reply,
-                message:"checked  user  sucessfully"
-             })
-    })
-    //getprofile
+// Future: Get profile route (uncomment and fix path when implemented)
+// userAuthrouter.get("/getprofile", getprofile);
 
-    //userAuthrouter.get("./getprofilr" , getprofile)
-
-
-    module.exports =  userAuthrouter ;
+export default userAuthrouter;

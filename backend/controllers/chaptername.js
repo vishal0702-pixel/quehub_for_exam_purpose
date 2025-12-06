@@ -1,39 +1,35 @@
-const  Chapter =  require ("../models/chapters");
-const Subject =  require ("../models/subject")
+import Chapter from "../models/chapters.js";
+import Subject from "../models/subject.js";
 
-const addchapters = async(req,res)=>{
-try{
-const{ chaptername ,  subject , discription } = req.body;
-const newchapter = await Chapter.create({chaptername , subject , discription});
-res.send("chapter  added succesfully");
-}
-catch(err){
-    res.send("chapter not added ");
-    console.log( "Error" + err)
-}
-
-
-}
+export const addchapters = async (req, res) => {
+  try {
+    const { chaptername, subject, discription } = req.body;
+    await Chapter.create({ chaptername, subject, discription });
+    res.send("Chapter added successfully");
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("Chapter not added");
+  }
+};
 
 // GET CHAPTERS BY SUBJECT NAME
-const getchapters = async(req,res)=>{
-   try {
-    const {subjectname} = req.params;
+export const getchapters = async (req, res) => {
+  try {
+    const { subjectname } = req.params;
 
     const clickedsubject = await Subject.findOne({ subjectname });
     if (!clickedsubject) {
       return res.status(404).send("Subject not found");
     }
 
-    const chapters = await Chapter.find({ subject : clickedsubject._id })
-                                  .populate("subject","subjectname");
+    const chapters = await Chapter.find({ subject: clickedsubject._id }).populate(
+      "subject",
+      "subjectname"
+    );
 
     res.json(chapters);
-   } catch(err){
+  } catch (err) {
+    console.error("Error:", err);
     res.status(500).send("Error fetching chapters");
-    console.log("Error"+ err)
-   }
-}
-
-
-module.exports =  { addchapters , getchapters };
+  }
+};

@@ -1,32 +1,26 @@
-const mongoose = require ( "mongoose") ;
+import mongoose from "mongoose";
 
-const {Schema} = mongoose ;
+const { Schema } = mongoose;
 
+const chapterSchema = new Schema(
+  {
+    subject: {
+      type: Schema.Types.ObjectId,
+      ref: "Subject",
+    },
+    chaptername: {
+      type: String,
+      required: true,
+    },
+    discription: {
+      type: String,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
 
-const  chapterSchema = new Schema({
-    
+const Chapter = mongoose.model("Chapter", chapterSchema);
 
-     subject :{
-        type:Schema.Types.ObjectId,
-        ref:"Subject"
-     },
-chaptername:{ type:String,
-          required:true,
-         
-          } ,
-
- discription:{
-           type:String,
-         
-         }   
-   
- 
- 
-        } ,{
-            timestamps:true
-        }
-)
-
-const Chapter =  mongoose.model("Chapter" , chapterSchema);
-
-module.exports = Chapter;
+export default Chapter;

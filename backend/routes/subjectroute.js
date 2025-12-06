@@ -1,10 +1,9 @@
-const  express =  require ("express");
-
-const {addsubject , getsubject} = require("../controllers/subjectcards"); 
+import express from "express";
+import { addsubject, getsubject } from "../controllers/subjectcards.js";
 
 const subjectroutes = express.Router();
 
-subjectroutes.post("/addsubject" , addsubject);
-subjectroutes.get("/:year/getsubject" ,getsubject );
+subjectroutes.post("/addsubject", addsubject);
+subjectroutes.get("/:year/getsubject", getsubject);
 
-module.exports =  subjectroutes;
+export default subjectroutes;
